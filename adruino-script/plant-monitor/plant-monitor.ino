@@ -18,6 +18,7 @@ const int buzzerPin = 0;    // GPIO0 (D3 on NodeMCU)
 int threshold = 750;
 unsigned long lastAlertTime = 0;
 const unsigned long cooldownPeriod = 60000; // 1 minute
+static bool wasAboveThreshold = false;
 
 void setup() {
   Serial.begin(115200);
@@ -51,7 +52,7 @@ void loop() {
   static unsigned long lastSend = 0;
   if (millis() - lastSend > 1000) {
     int moisture = analogRead(soilMoisturePin);
-webSocket.broadcastTXT(String(moisture).c_str());  // Send as C-string
+    webSocket.broadcastTXT(String(moisture).c_str());  // Send as C-string
     updateLeds(moisture);
     lastSend = millis();
   }
@@ -61,19 +62,28 @@ void updateLeds(int moisture) {
   if (moisture > threshold) {
     digitalWrite(greenLedPin, LOW);
     digitalWrite(redLedPin, HIGH);
+    if (!wasAboveThreshold) {
+      lastAlertTime = 0; // Reset cooldown timer
+      wasAboveThreshold = true;
+    }
     handleBuzzer();
   } else {
     digitalWrite(greenLedPin, HIGH);
     digitalWrite(redLedPin, LOW);
     digitalWrite(buzzerPin, LOW);
+    wasAboveThreshold=false;
   }
 }
 
 void handleBuzzer() {
   if (millis() - lastAlertTime > cooldownPeriod) {
-    digitalWrite(buzzerPin, HIGH);
-    delay(200);
-    digitalWrite(buzzerPin, LOW);
+ // Beep 3 times quickly
+    for (int i = 0; i < 3; i++) {
+      digitalWrite(buzzerPin, HIGH);
+      delay(100); // Beep for 100ms
+      digitalWrite(buzzerPin, LOW);
+      delay(100); // Pause for 100ms
+    }
     lastAlertTime = millis();
   }
 }
