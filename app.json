@@ -2,7 +2,7 @@
   "expo": {
     "name": "Plant-monitor",
     "slug": "Plant-monitor",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -16,13 +16,22 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.plantmonitor",
+      "versionCode": 2,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+        "backgroundColor": "#121212"
+      },
+      "usesCleartextTraffic": true,
+      "permissions": ["INTERNET"]
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "e663f2a3-ee21-4370-ac56-8c77f9b64810"
+      }
     }
   }
 }

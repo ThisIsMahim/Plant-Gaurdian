@@ -10,10 +10,18 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@react-native-firebase/app": "^21.7.1",
+    "@react-native-firebase/messaging": "^21.7.1",
     "expo": "~52.0.27",
+    "expo-device": "~7.0.2",
+    "expo-notifications": "~0.29.12",
     "expo-status-bar": "~2.0.1",
+    "firebase": "^11.2.0",
     "react": "18.3.1",
-    "react-native": "0.76.6"
+    "react-native": "0.76.6",
+    "react-native-chart-kit": "^6.12.0",
+    "expo-blur": "~14.0.3",
+    "react-native-svg": "15.8.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
